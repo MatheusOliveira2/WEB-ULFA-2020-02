@@ -8,6 +8,7 @@ router.post('/', (req, res) => {
   db.run(
     `INSERT INTO schedule_info(name,number) VALUES(?, ?)`,
     [name, number],
+<<<<<<< HEAD
     function (err) {
       if (err) {
         return console.log(err.message);
@@ -19,6 +20,16 @@ router.post('/', (req, res) => {
   );
 });
 
+=======
+    (err) => {
+      if (err) {
+        return console.log(err.message);
+      }
+    }
+  );
+  res.send(req.body);
+});
+>>>>>>> 1e487a1d84daf8ada1a52b6322746007ca6ac01e
 router.get('/', (_req, res) => {
   db.all(`SELECT * FROM schedule_info`, [], (err, rows) => {
     if (err) {
