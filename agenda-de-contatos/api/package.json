@@ -7,10 +7,7 @@
     "dev": "nodemon index.js"
   },
   "dependencies": {
-<<<<<<< HEAD
     "cors": "^2.8.5",
-=======
->>>>>>> 1e487a1d84daf8ada1a52b6322746007ca6ac01e
     "express": "^4.17.1",
     "sqlite3": "^5.0.0"
   },

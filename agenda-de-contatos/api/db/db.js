@@ -8,7 +8,8 @@ const db = new sqlite.Database('schedule.db', (err) => {
 });
 
 db.run(
-  'CREATE TABLE if not exists schedule_info (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, number TEXT NOT NULL)'
+  `CREATE TABLE if not exists schedule_info (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL, number TEXT NOT NULL, uf TEXT NOT NULL,
+      city TEXT NOT NULL,  street TEXT NOT NULL,  neighborhood TEXT NOT NULL )`
 );
 //db.run('DROP TABLE if exists schedule_info');
 
