@@ -4,7 +4,7 @@ const db = new sqlite.Database('schedule.db', (err) => {
   if (err) {
     return console.error(err.message);
   }
-  console.log('Connected!');
+  //console.log('Connected!');
 });
 
 db.run(
