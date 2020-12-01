@@ -1,10 +1,3 @@
-import express from 'express';
-import cors from 'cors';
-import scheduleRouter from './routes/schedule.js';
+import app from './server.js';
 
-const app = express();
-app.use(express.json());
-app.use(cors());
-app.use('/schedule', scheduleRouter);
-
-app.listen(3001, () => console.log('Started!'));
+app.listen(3000, () => console.log('Started!'));

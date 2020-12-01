@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import scheduleService from '../services/scheduleService';
-import axios from 'axios';
 
 export default function Table() {
   const [accounts, setAccounts] = useState([]);
@@ -8,16 +7,6 @@ export default function Table() {
   const [number, setNumber] = useState(0);
   const [search, setSearch] = useState('');
   const [buttonType, setButtonType] = useState('cadastrar');
-
-  const [disabled, setDisabled] = useState(true);
-  const [address, setAddress] = useState({
-    uf: '',
-    localidade: '',
-    bairro: '',
-    logradouro: '55',
-  });
-
-  const [cep, setCep] = useState(0);
 
   const [updateIndex, setUpdateIndex] = useState(-1);
 
@@ -33,7 +22,6 @@ export default function Table() {
   useEffect(() => {
     async function getAll() {
       const data = await scheduleService.getAll();
-      if (!data.logradouro) setDisabled(false);
       setAccounts(data);
     }
     getAll();
@@ -51,18 +39,6 @@ export default function Table() {
     }
   };
 
-  const handleCepConfirmed = async () => {
-    try {
-      const data = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
-      if (data.data.erro === true) {
-        throw 'Cep não encontrado';
-      }
-      setAddress(data.data);
-    } catch (error) {
-      alert(error);
-    }
-  };
-
   const handleEditButton = (account) => {
     setButtonType('atualizar');
     setName(account.name);
@@ -71,8 +47,7 @@ export default function Table() {
   };
 
   const handleRegisterButton = async () => {
-    console.log(address);
-    const data = await scheduleService.add({ name, number, ...address });
+    const data = await scheduleService.add({ name, number });
     setAccounts([data, ...accounts]);
   };
 
@@ -108,6 +83,7 @@ export default function Table() {
             <br></br>
             <input
               value={name}
+              id="name"
               type="text"
               className="validate"
               onChange={(e) => setName(e.target.value)}
@@ -118,78 +94,15 @@ export default function Table() {
             <br></br>
             <input
               value={number}
-              type="number"
+              id="number"
               className="validate"
               onChange={(e) => setNumber(e.target.value)}
             />
           </div>
           <div className="col s2 valign-wrapper">{button}</div>
         </div>
-        <div className="col s12">
-          <div className="input-field col s2">
-            <label htmlFor="number">CEP</label>
-            <br></br>
-            <input
-              value={cep}
-              type="number"
-              className="validate"
-              onChange={(e) => setCep(e.target.value)}
-              onKeyDown={(e) => (e.key === 'Enter' ? handleCepConfirmed() : '')}
-            />
-          </div>
-          <div className="input-field col s2">
-            <label htmlFor="estado">Estado</label>
-            <br></br>
-            <input
-              value={address.uf}
-              type="text"
-              disabled
-              className="validate"
-              onChange={(e) => setAddress({ ...address, uf: e.target.value })}
-            />
-          </div>
-          <div className="input-field col s2">
-            <label htmlFor="cidade">Cidade</label>
-            <br></br>
-            <input
-              value={address.localidade}
-              type="text"
-              disabled
-              className="validate"
-              onChange={(e) =>
-                setAddress({ ...address, localidade: e.target.value })
-              }
-            />
-          </div>
-          <div className="input-field col s2">
-            <label htmlFor="bairro">Bairro</label>
-            <br></br>
-            <input
-              value={address.bairro}
-              type="text"
-              className="validate"
-              disabled={disabled}
-              onChange={(e) =>
-                setAddress({ ...address, bairro: e.target.value })
-              }
-            />
-          </div>
-          <div className="input-field col s2">
-            <label htmlFor="logradouro">Logradouro</label>
-            <br></br>
-            <input
-              value={address.logradouro}
-              type="text"
-              disabled={disabled}
-              className="validate"
-              onInput={(e) =>
-                setAddress({ ...address, logradouro: e.target.value })
-              }
-            />
-          </div>
-        </div>
         <div className="input-field col s3 offset-s4">
-          <label htmlFor="name">Buscar Contato</label>
+          <label htmlFor="name">Buscar Conta</label>
           <br></br>
           <input
             id="search"
@@ -203,11 +116,7 @@ export default function Table() {
         <thead>
           <tr>
             <th>Nome</th>
-            <th>Telefone</th>
-            <th>Estado</th>
-            <th>Cidade</th>
-            <th>Bairro</th>
-            <th>Logradouro</th>
+            <th>Número</th>
             <th className="center">Ações</th>
           </tr>
         </thead>
@@ -219,10 +128,6 @@ export default function Table() {
                 <tr key={index}>
                   <td>{account.name}</td>
                   <td>{account.number}</td>
-                  <td>{account.uf}</td>
-                  <td>{account.city}</td>
-                  <td>{account.neighborhood}</td>
-                  <td>{account.street}</td>
                   <td className="center">
                     <a
                       className="waves-effect waves-light btn red"
