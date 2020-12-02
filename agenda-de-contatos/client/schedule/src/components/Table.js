@@ -79,6 +79,7 @@ export default function Table() {
   let button = (
     <div>
       <a
+        data-cy="register-button"
         className="waves-effect waves-light btn green"
         onClick={handleRegisterButton}
       >
@@ -102,11 +103,13 @@ export default function Table() {
   return (
     <div>
       <div className="row">
+        <h1>Agenda</h1>
         <div className="col s12 valign-wrapper">
           <div className="input-field col s3">
             <label htmlFor="name">Nome</label>
             <br></br>
             <input
+              data-cy="input-name"
               value={name}
               type="text"
               className="validate"
@@ -117,6 +120,7 @@ export default function Table() {
             <label htmlFor="number">Número</label>
             <br></br>
             <input
+              data-cy="input-number"
               value={number}
               type="number"
               className="validate"
@@ -130,6 +134,7 @@ export default function Table() {
             <label htmlFor="number">CEP</label>
             <br></br>
             <input
+              data-cy="input-cep"
               value={cep}
               type="number"
               className="validate"
@@ -217,7 +222,7 @@ export default function Table() {
             if (search === '' || account.name.toString().includes(search)) {
               return (
                 <tr key={index}>
-                  <td>{account.name}</td>
+                  <td data-cy="data-name">{account.name}</td>
                   <td>{account.number}</td>
                   <td>{account.uf}</td>
                   <td>{account.city}</td>

@@ -1,3 +1,3 @@
 import app from './server.js';
 
-app.listen(3000, () => console.log('Started!'));
+app.listen(3001, () => console.log('Started!'));
